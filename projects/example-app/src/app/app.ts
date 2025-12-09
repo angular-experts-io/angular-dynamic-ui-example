@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
+import { routes } from './app.routes';
+
 @Component({
   selector: 'ax-root',
   imports: [RouterLink, RouterOutlet],
@@ -9,8 +11,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <div class="flow-y-lg">
         <h1>Dynamic UI example</h1>
         <div class="flow-x-md">
-          @for (nav of navs(); track nav.route) {
-            <a [routerLink]="nav.route" class="btn">{{ nav.label }}</a>
+          @for (nav of navs(); track nav.path) {
+            <a [routerLink]="nav.path" class="btn">{{ nav.title }}</a>
           }
         </div>
 
@@ -21,8 +23,5 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styles: [],
 })
 export class App {
-  navs = signal([
-    { label: 'Standard Template', route: 'standard-template' },
-    { label: 'Component Outlet', route: 'ng-component-outlet' },
-  ]);
+  navs = signal(routes.filter((r) => r.title));
 }

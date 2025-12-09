@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 import { Card } from '../card/card';
 
 @Component({
@@ -8,7 +8,11 @@ import { Card } from '../card/card';
     <ax-card>
       <div class="flow-y-sm">
         <h4>Widget C</h4>
-        <button type="button" class="btn" (click)="alert.emit('Alert from Widget C')">
+        <button
+          type="button"
+          class="btn"
+          (click)="alert.emit('Alert from Widget C'); alertOld.emit('Alert from Widget C (OLD)')"
+        >
           Alert!
         </button>
       </div>
@@ -18,4 +22,5 @@ import { Card } from '../card/card';
 })
 export class WidgetC {
   alert = output<string>();
+  @Output() alertOld = new EventEmitter<string>();
 }
