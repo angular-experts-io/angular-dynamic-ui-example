@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o --hmr false",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "format:test": "prettier --list-different \"./projects/**/*.{ts,html,scss,json}\"",
+    "format:write": "prettier --write \"./projects/**/*.{ts,html,scss,json}\""
   },
   "prettier": {
     "printWidth": 100,
@@ -33,8 +35,10 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular/build": "^21.0.2",
     "@angular/cli": "^21.0.2",
     "@angular/compiler-cli": "^21.0.0",
+    "prettier": "^3.7.4",
     "typescript": "~5.9.2"
   }
 }
