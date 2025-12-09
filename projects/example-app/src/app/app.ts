@@ -10,11 +10,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         <h1>Dynamic UI example</h1>
         <div class="flow-x-md">
           @for (nav of navs(); track nav.route) {
-            <a
-              [routerLink]="nav.route"
-              class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-              >{{ nav.label }}</a
-            >
+            <a [routerLink]="nav.route" class="btn">{{ nav.label }}</a>
           }
         </div>
 

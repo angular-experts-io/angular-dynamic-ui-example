@@ -21,7 +21,7 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
                 @if (w === 'a') {
                   <ax-widget-a [data]="data()" />
                 } @else if (w === 'b') {
-                  <ax-widget-b />
+                  <ax-widget-b [dataOther]="dataOther()" />
                 } @else if (w === 'c') {
                   <ax-widget-c />
                 } @else if (w === 'd') {
@@ -41,10 +41,10 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
                     <ax-widget-a [data]="data()" />
                   }
                   @case ('b') {
-                    <ax-widget-b />
+                    <ax-widget-b [dataOther]="dataOther()" />
                   }
                   @case ('c') {
-                    <ax-widget-c />
+                    <ax-widget-c (alert)="handlerAlert($event)"/>
                   }
                   @case ('d') {
                     <ax-widget-d />
@@ -63,8 +63,13 @@ export class StandardTemplate {
   widgets = [
     'a',
     'b',
-    // 'c', 'd'
+    'c', 'd'
   ];
 
   data = signal('Some data');
+  dataOther = signal('Other data');
+
+  handlerAlert(message: string) {
+    alert(message);
+  }
 }

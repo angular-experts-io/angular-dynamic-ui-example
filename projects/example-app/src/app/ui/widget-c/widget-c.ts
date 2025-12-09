@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { Card } from '../card/card';
 
 @Component({
@@ -8,9 +8,14 @@ import { Card } from '../card/card';
     <ax-card>
       <div class="flow-y-sm">
         <h4>Widget C</h4>
+        <button type="button" class="btn" (click)="alert.emit('Alert from Widget C')">
+          Alert!
+        </button>
       </div>
     </ax-card>
   `,
   styles: ``,
 })
-export class WidgetC {}
+export class WidgetC {
+  alert = output<string>();
+}
