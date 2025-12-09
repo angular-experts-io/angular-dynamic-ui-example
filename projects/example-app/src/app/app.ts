@@ -1,16 +1,32 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'ax-root',
-  imports: [RouterOutlet],
+  imports: [RouterLink, RouterOutlet],
   template: `
-    <h1>Welcome to {{ title() }}!</h1>
+    <div class="container mx-auto py-8">
+      <div class="flow-y-lg">
+        <h1>Dynamic UI example</h1>
+        <div class="flow-x-md">
+          @for (nav of navs(); track nav.route) {
+            <a
+              [routerLink]="nav.route"
+              class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+              >{{ nav.label }}</a
+            >
+          }
+        </div>
 
-    <router-outlet />
+        <router-outlet />
+      </div>
+    </div>
   `,
   styles: [],
 })
 export class App {
-  protected readonly title = signal('example-app');
+  navs = signal([
+    { label: 'Standard Template', route: 'standard-template' },
+    { label: 'Component Outlet', route: 'ng-component-outlet' },
+  ]);
 }

@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :focus-visible {
+    @apply outline-dashed outline-2 outline-offset-2 outline-blue-300;
+  }
+}
+
+@layer utilities {
+  .bg-stripes {
+    --stripe-size: 2px;
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(0, 0, 0, 0.03) 0 calc(var(--stripe-size) / 2),
+      transparent calc(var(--stripe-size) / 2) calc(var(--stripe-size) * 3)
+    );
+  }
+
+  .flow-y-xs {
+    @apply flex flex-col gap-1;
+  }
+  .flow-y-sm {
+    @apply flex flex-col gap-2;
+  }
+  .flow-y-md {
+    @apply flex flex-col gap-4;
+  }
+  .flow-y-lg {
+    @apply flex flex-col gap-8;
+  }
+  .flow-y-xl {
+    @apply flex flex-col gap-12;
+  }
+  .flow-y-2xl {
+    @apply flex flex-col gap-16;
+  }
+
+  .flow-x-xs {
+    @apply flex gap-1;
+  }
+  .flow-x-sm {
+    @apply flex gap-2;
+  }
+  .flow-x-md {
+    @apply flex gap-4;
+  }
+  .flow-x-lg {
+    @apply flex gap-8;
+  }
+  .flow-x-xl {
+    @apply flex gap-12;
+  }
+  .flow-x-2xl {
+    @apply flex gap-16;
+  }
+}
+
+h1 {
+  @apply text-3xl;
+}
+h2 {
+  @apply text-2xl;
+}
+h3 {
+  @apply text-xl;
+}
+h4 {
+  @apply text-lg;
+}
+p {
+  @apply text-base;
+}
