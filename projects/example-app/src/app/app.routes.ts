@@ -32,6 +32,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/vcr-abstraction/vcr-abstraction.routes'),
   },
   {
+    path: 'html-content',
+    title: 'HTML content',
+    loadChildren: () => import('./features/html-content/html-content.routes'),
+  },
+  {
     path: '**',
     redirectTo: 'standard-template',
   },
