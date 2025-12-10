@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ComponentRef,
   DestroyRef,
   Directive,
@@ -9,11 +10,7 @@ import {
   Signal,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  WIDGET_REGISTRY_ASYNC_FULL,
-  WidgetRegistryAsync,
-  WidgetRegistryAsyncKeys,
-} from '../ui/widget-registry-async';
+import { WIDGET_REGISTRY_ASYNC_FULL, WidgetRegistryAsync } from '../ui/widget-registry-async';
 
 @Directive({
   selector: '[axDynamicUiHost]',
@@ -28,9 +25,8 @@ export class DynamicUiHost {
 
   refs: ComponentRef<any>[] = [];
 
-  constructor() {
-    const widgets: WidgetRegistryAsyncKeys[] = ['a', 'b', 'c'];
-    widgets.forEach(async (widget) => {
+  #init = afterNextRender(() => {
+    this.axDynamicUiHostWidgets().forEach(async (widget) => {
       const widgetConfig = WIDGET_REGISTRY_ASYNC_FULL[widget];
       const component = await widgetConfig.import();
       const inputBindings = (widgetConfig.bindings.inputs ?? [])
@@ -39,20 +35,20 @@ export class DynamicUiHost {
           console.log(`[DynamicUiHost] binding input "${prop}" to data source`, dataSource);
           return dataSource ? inputBinding(prop, dataSource) : undefined;
         })
-        .filter(v => !!v);
+        .filter((v) => !!v);
       const outputBindings = (widgetConfig.bindings.outputs ?? [])
         .map((prop) => {
           const outputHandler = (this.axDynamicUiHostOutputHandlers() as any)[prop];
           return outputHandler ? outputBinding(prop, outputHandler) : undefined;
         })
-        .filter(v => !!v);
+        .filter((v) => !!v);
       const componentRef = this.#vcr.createComponent(component, {
         bindings: [...inputBindings, ...outputBindings],
       });
 
       this.refs.push(componentRef);
     });
-  }
+  });
 
   #destroy = inject(DestroyRef).onDestroy(() => this.refs.forEach((ref) => ref.destroy()));
 }

@@ -14,7 +14,15 @@ import { WIDGET_REGISTRY_ASYNC_FULL } from '../../ui/widget-registry-async';
       <div class="flow-x-md">
         <ng-container
           [axDynamicUiHost]="WIDGET_REGISTRY_ASYNC_FULL"
-          [axDynamicUiHostWidgets]="['a', 'b', 'c']"
+          [axDynamicUiHostWidgets]="['b', 'c']"
+          [axDynamicUiHostInputSources]="inputSources"
+          [axDynamicUiHostOutputHandlers]="outputHandlers"
+        />
+      </div>
+      <div class="flow-y-md">
+        <ng-container
+          [axDynamicUiHost]="WIDGET_REGISTRY_ASYNC_FULL"
+          [axDynamicUiHostWidgets]="['a', 'd']"
           [axDynamicUiHostInputSources]="inputSources"
           [axDynamicUiHostOutputHandlers]="outputHandlers"
         />
@@ -26,12 +34,12 @@ import { WIDGET_REGISTRY_ASYNC_FULL } from '../../ui/widget-registry-async';
 export class VcrAbstraction {
   protected readonly WIDGET_REGISTRY_ASYNC_FULL = WIDGET_REGISTRY_ASYNC_FULL;
 
-  inputSources = {
+  protected readonly inputSources = {
     data: signal('Some data'),
     dataOther: signal('Some dataOther'),
-  }
+  };
 
-  outputHandlers = {
+  protected readonly outputHandlers = {
     alert: (message: string) => alert(message),
-  }
+  };
 }
