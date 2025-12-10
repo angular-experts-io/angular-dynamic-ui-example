@@ -1,4 +1,12 @@
-import { Component, ComponentRef, DestroyRef, inject, inputBinding, viewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  DestroyRef,
+  inject,
+  inputBinding,
+  viewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { WIDGET_REGISTRY_ASYNC, WidgetRegistryAsyncKeys } from '../../ui/widget-registry-async';
 
 @Component({
@@ -41,5 +49,5 @@ export class VcrImperative {
     });
   }
 
-  #destroy = inject(DestroyRef).onDestroy(() => this.refs.forEach(ref => ref.destroy()));
+  #destroy = inject(DestroyRef).onDestroy(() => this.refs.forEach((ref) => ref.destroy()));
 }

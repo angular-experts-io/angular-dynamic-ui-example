@@ -7,7 +7,7 @@ export const WIDGET_REGISTRY_ASYNC = {
   d: () => import('./widget-d/widget-d').then((m) => m.WidgetD),
 } as const;
 
-export const WIDGET_REGISTRY_ASYNC_FULL: WidgetRegistryAsync= {
+export const WIDGET_REGISTRY_ASYNC_FULL: WidgetRegistryAsync = {
   a: {
     import: () => import('./widget-a/widget-a').then((m) => m.WidgetA),
     bindings: {
@@ -23,7 +23,7 @@ export const WIDGET_REGISTRY_ASYNC_FULL: WidgetRegistryAsync= {
   c: {
     import: () => import('./widget-c/widget-c').then((m) => m.WidgetC),
     bindings: {
-      outputs: ['alert']
+      outputs: ['alert'],
     },
   },
   d: {
@@ -34,7 +34,7 @@ export const WIDGET_REGISTRY_ASYNC_FULL: WidgetRegistryAsync= {
   },
 } as const;
 
-export type WidgetRegistryAsync = Record<WidgetRegistryAsyncKeys, WidgetConfigFull>
+export type WidgetRegistryAsync = Record<WidgetRegistryAsyncKeys, WidgetConfigFull>;
 
 export interface WidgetConfigFull {
   import: () => Promise<Type<any>>;

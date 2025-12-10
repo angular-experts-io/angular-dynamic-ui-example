@@ -16,9 +16,7 @@ import { WIDGET_REGISTRY_SYNC, WidgetRegistrySyncKeys } from '../../ui/widget-re
             <option [value]="widget">Widget {{ widget.toUpperCase() }}</option>
           }
         </select>
-        <button type="button" class="btn" (click)="toggleProjectedContent()">
-          Toggle projected content
-        </button>
+        <button type="button" (click)="toggleProjectedContent()">Toggle projected content</button>
       </div>
 
       <ng-container *ngComponentOutlet="component(); inputs: inputs(); content: content" />

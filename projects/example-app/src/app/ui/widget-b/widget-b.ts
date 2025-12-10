@@ -8,7 +8,7 @@ import { Card } from '../card/card';
     <ax-card>
       <div class="flow-y-sm">
         <h4>Widget B</h4>
-        <p>{{dataOther()}}</p>
+        <p>{{ dataOther() }}</p>
       </div>
     </ax-card>
   `,

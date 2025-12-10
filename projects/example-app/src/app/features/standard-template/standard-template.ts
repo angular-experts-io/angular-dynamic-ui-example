@@ -44,7 +44,7 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
                     <ax-widget-b [dataOther]="dataOther()" />
                   }
                   @case ('c') {
-                    <ax-widget-c (alert)="handlerAlert($event)"/>
+                    <ax-widget-c (alert)="handlerAlert($event)" />
                   }
                   @case ('d') {
                     <ax-widget-d />
@@ -60,11 +60,7 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
   styles: ``,
 })
 export class StandardTemplate {
-  widgets = [
-    'a',
-    'b',
-    'c', 'd'
-  ];
+  widgets = ['a', 'b', 'c', 'd'];
 
   data = signal('Some data');
   dataOther = signal('Other data');

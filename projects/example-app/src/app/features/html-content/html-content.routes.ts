@@ -7,8 +7,7 @@ export default <Routes>[
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./html-content').then((m) => m.HtmlContent),
+        loadComponent: () => import('./html-content').then((m) => m.HtmlContent),
       },
     ],
   },
