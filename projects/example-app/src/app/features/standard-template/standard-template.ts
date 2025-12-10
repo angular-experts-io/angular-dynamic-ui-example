@@ -19,13 +19,21 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
             @for (w of widgets; track w) {
               @defer {
                 @if (w === 'a') {
-                  <ax-widget-a [data]="data()" />
+                  @defer {
+                    <ax-widget-a [data]="data()" />
+                  }
                 } @else if (w === 'b') {
-                  <ax-widget-b [dataOther]="dataOther()" />
+                  @defer {
+                    <ax-widget-b [dataOther]="dataOther()" />
+                  }
                 } @else if (w === 'c') {
-                  <ax-widget-c />
+                  @defer {
+                    <ax-widget-c />
+                  }
                 } @else if (w === 'd') {
-                  <ax-widget-d />
+                  @defer {
+                    <ax-widget-d />
+                  }
                 }
               }
             }
@@ -35,18 +43,24 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
           <h3>Using <code>&#64;switch</code></h3>
           <div class="flow-x-lg">
             @for (w of widgets; track w) {
-              @defer {
-                @switch (w) {
-                  @case ('a') {
+              @switch (w) {
+                @case ('a') {
+                  @defer {
                     <ax-widget-a [data]="data()" />
                   }
-                  @case ('b') {
+                }
+                @case ('b') {
+                  @defer {
                     <ax-widget-b [dataOther]="dataOther()" />
                   }
-                  @case ('c') {
+                }
+                @case ('c') {
+                  @defer {
                     <ax-widget-c (alert)="handlerAlert($event)" />
                   }
-                  @case ('d') {
+                }
+                @case ('d') {
+                  @defer {
                     <ax-widget-d />
                   }
                 }
@@ -60,7 +74,7 @@ import { WidgetD } from '../../ui/widget-d/widget-d';
   styles: ``,
 })
 export class StandardTemplate {
-  widgets = ['a', 'b', 'c', 'd'];
+  widgets = ['a','b', 'c', 'd'];
 
   data = signal('Some data');
   dataOther = signal('Other data');
