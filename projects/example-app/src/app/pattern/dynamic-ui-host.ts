@@ -1,5 +1,5 @@
 import {
-  afterNextRender,
+  afterRenderEffect,
   ComponentRef,
   DestroyRef,
   Directive,
@@ -25,14 +25,14 @@ export class DynamicUiHost {
 
   refs: ComponentRef<any>[] = [];
 
-  #init = afterNextRender(() => {
+  #setup = afterRenderEffect(() => {
+    this.refs.forEach((ref) => ref.destroy());
     this.axDynamicUiHostWidgets().forEach(async (widget) => {
       const widgetConfig = WIDGET_REGISTRY_ASYNC_FULL[widget];
       const component = await widgetConfig.import();
       const inputBindings = (widgetConfig.bindings.inputs ?? [])
         .map((prop) => {
           const dataSource = (this.axDynamicUiHostInputSources() as any)[prop];
-          console.log(`[DynamicUiHost] binding input "${prop}" to data source`, dataSource);
           return dataSource ? inputBinding(prop, dataSource) : undefined;
         })
         .filter((v) => !!v);
@@ -43,7 +43,7 @@ export class DynamicUiHost {
         })
         .filter((v) => !!v);
       const componentRef = this.#vcr.createComponent(component, {
-        bindings: [...inputBindings, ...outputBindings],
+        bindings: [...inputBindings, ...outputBindings]
       });
 
       this.refs.push(componentRef);

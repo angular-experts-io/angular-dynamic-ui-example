@@ -17,6 +17,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/ng-component-outlet/ng-component-outlet.routes'),
   },
   {
+    path: 'ng-component-outlet-lazy',
+    title: 'Component Outlet (lazy)',
+    loadChildren: () => import('./features/ng-component-outlet-lazy/ng-component-outlet-lazy.routes'),
+  },
+  {
     path: 'vcr-imperative',
     title: 'VCR Imperative',
     loadChildren: () => import('./features/vcr-imperative/vcr-imperative.routes'),
