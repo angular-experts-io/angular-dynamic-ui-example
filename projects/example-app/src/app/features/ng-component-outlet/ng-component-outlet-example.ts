@@ -1,14 +1,24 @@
-import { Component, computed, linkedSignal, signal, viewChild } from '@angular/core';
+import {
+  afterRenderEffect,
+  Component,
+  computed,
+  linkedSignal,
+  signal,
+  TemplateRef,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 
 import { WIDGET_REGISTRY_SYNC, WidgetRegistrySyncKeys } from '../../ui/widget-registry-sync';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ax-ng-component-outlet',
   imports: [NgComponentOutlet],
   template: `
     <div class="flow-y-lg">
-      <h2>Standard template</h2>
+      <h2>Component outlet</h2>
 
       <div class="flow-x-md">
         <select #select [value]="widget()" (change)="widget.set($any(select.value))">
@@ -19,7 +29,11 @@ import { WIDGET_REGISTRY_SYNC, WidgetRegistrySyncKeys } from '../../ui/widget-re
         <button type="button" (click)="toggleProjectedContent()">Toggle projected content</button>
       </div>
 
-      <ng-container *ngComponentOutlet="component(); inputs: inputs(); content: content" />
+      <ng-container *ngComponentOutlet="component(); inputs: inputs(); content: content()" />
+      
+      <ng-template #projectedContent>
+        <div>extra projected content</div>
+      </ng-template>
     </div>
   `,
   styles: ``,
@@ -31,7 +45,9 @@ export class NgComponentOutletExample {
   component = computed(() => WIDGET_REGISTRY_SYNC[this.widget()]);
   data = signal('Some data');
   dynamicComponent = viewChild(NgComponentOutlet);
-  content = [[document.createTextNode('Hello projected world!')]];
+  projectedContent = viewChild<TemplateRef<any>>('projectedContent');
+
+  content = signal<any[][]>([[]]);
   inputs = linkedSignal(() => {
     if (this.widget() === 'a') {
       return {
@@ -46,6 +62,19 @@ export class NgComponentOutletExample {
     }
   });
 
+  sub = signal<Subscription | undefined>(undefined);
+  #effectTryWireUpOutputs = afterRenderEffect({ read: () => {
+    if (this.widget() && this.dynamicComponent()) {
+      untracked(this.sub)?.unsubscribe();
+      const sub = this.dynamicComponent()?.componentInstance?.alertOld?.subscribe(
+        (message: any) => {
+          alert(message);
+        },
+      );
+      this.sub.set(sub);
+    }
+  }});
+
   constructor() {
     setInterval(() => {
       this.data.set('Some data ' + new Date().toLocaleTimeString());
@@ -53,6 +82,11 @@ export class NgComponentOutletExample {
   }
 
   toggleProjectedContent() {
-    this.content = this.content.length ? [] : [[document.createTextNode('Hello projected world!')]];
+    if (this.content()[0][0]) {
+      this.content.set([[]]);
+    } else {
+      const view = this.projectedContent()?.createEmbeddedView({})
+      this.content.set([[view?.rootNodes]]);
+    }
   }
 }
